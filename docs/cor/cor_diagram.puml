@@ -1,0 +1,18 @@
+@startuml
+
+participant MailServer
+participant MailHandler
+participant FanHandler
+participant SpamHandler
+participant BusinessHandler
+
+MailServer -> MailHandler
+
+group handlers
+    MailHandler --> FanHandler
+    FanHandler --> SpamHandler
+    SpamHandler --> BusinessHandler
+
+end
+
+@enduml

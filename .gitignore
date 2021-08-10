@@ -1,0 +1,10 @@
+.idea/
+target/
+*.iml
+*.class
+
+.metals/
+.DS_Store
+
+.vscode
+.java-version
