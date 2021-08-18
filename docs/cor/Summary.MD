@@ -1,3 +1,9 @@
+---
+title: Chain of Responsibility Design Pattern
+date: 2021-08-15
+tags: design-patterns,java8
+author: Kuldeep Yadav
+---
 ## Chain Of Responsibility 
 Chain of responsibility pattern is behavioural pattern from G.O.F book about design patterns, this pattern is very useful
 to decouple the sender from its receivers and each receiver has some responsibility to fulfill.
@@ -23,8 +29,8 @@ diagram of the classes involved.
 
 ![Class Diagram](../img/cor_class.png)
 
-Here, `MailHandler` is the abstract class with abstract `filter` method, which will be then implemented by every concrete
-class i.e. `SpamHandler`, `FanHandler`, so each handler will provide its own implementation for filter logic.
+Here, `MailFilter` is the functional interface with abstract `filter` method, which will be then implemented by every concrete
+class i.e. `SpamFilter`, `FanFilter`, so each filter will provide its own implementation for filter logic.
 
 `MailServer` class is the sender class which will send the mail object to handler assigned to it, in actual 
 implementation it would not know if there are more than one handler and which handler it is interacting with.
@@ -80,7 +86,7 @@ As you can see the `SpamFilter` class implements the `MailFilter` interface, so 
 which will then check if the `Mail` object can be filtered and if true then it will process (In this case only printing
 on console).
 
-> This cannot not be the actual logic for spam filtering in real life, please don't use it in production :)
+> The filtering logic in above example is just for demo purpose, please don't use it in production :)
 
 Similarly, there would be other filters in the chain which will process the `Mail` object and work on it if the 
 logic/condition passes. Let's see how it is being used by the sender/client.
@@ -104,7 +110,7 @@ class MailServer {
 }
 ```
 Here for the demo purpose I have chosen to define the chain in the same class but in real scenario, you may want to have
-some strategy which will generate this chain and give you the `filter` object to deal with in your code. Here, we need
+some strategy or factory which will generate this chain and give you the `filter` object to deal with in your code. Here, we need
 to check only the `process` method which is receiving list of mails and process them one by one.
 
 You can see that this is much cleaner solution than if-else chain in your code and also decouples the sender from the 
@@ -126,6 +132,20 @@ the decorator pattern.
 * Use it when multiple handlers must be able to process a request object, and you don't want sender to have any idea
 about multiple handlers.
 * Don't use it when the client must know the handler which will execute the request.
+
+### Conclusion
+
+COR design pattern helps to decouple the sender from its receivers, the request sent by sender can be handled by
+multiple handlers or receivers without sender knowing it, which will then gives flexibility to remove or add the receivers
+without touching the code of sender. `javax.servlet.Filter` API is nice example of this pattern implemented in java
+world, another good case of this pattern is logging, [wikipedia](https://en.wikipedia.org/wiki/Chain-of-responsibility_pattern)
+mention this example with implmentation. But COR pattern also have its downsides so as a developer we must be aware of
+these.
+
+### References
+* [Chain of Responsibility pattern wikipedia](https://en.wikipedia.org/wiki/Chain-of-responsibility_pattern)
+* [Head First Design Pattern book](https://www.oreilly.com/library/view/head-first-design/0596007124/)
+* [Source code for above example](https://github.com/novicedev7291/design-patterns)
 
 
 ---

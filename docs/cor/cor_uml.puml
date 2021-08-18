@@ -1,0 +1,27 @@
+@startuml
+
+class Mail {
+    String subject;
+    String body;
+    String from;
+    String to;
+}
+
+interface MailFilter {
+    - MailFilter appendNext(MailFilter)
+    ---
+    + filter(mail: Mail)
+}
+
+class SpamFilter extends MailFilter
+
+class FanFilter extends MailFilter
+
+class BusinessFilter extends MailFilter
+
+class MailServer {
+    MailFilter filter;
+    + void process(List<Mail>)
+}
+
+@enduml

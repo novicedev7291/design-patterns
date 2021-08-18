@@ -1,18 +1,23 @@
 @startuml
 
 participant MailServer
-participant MailHandler
-participant FanHandler
-participant SpamHandler
-participant BusinessHandler
+participant MailFilter
+participant FanFilter
+participant SpamFilter
+participant BusinessFilter
 
-MailServer -> MailHandler
+MailServer -> MailFilter
 
-group handlers
-    MailHandler --> FanHandler
-    FanHandler --> SpamHandler
-    SpamHandler --> BusinessHandler
+group filters
+    MailFilter --> FanFilter
+    FanFilter --> MailFilter
+    FanFilter --> SpamFilter
+    SpamFilter --> FanFilter
+    SpamFilter --> BusinessFilter
+    BusinessFilter --> SpamFilter
 
 end
+
+MailFilter --> MailServer
 
 @enduml
